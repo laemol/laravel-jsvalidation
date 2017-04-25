@@ -155,7 +155,10 @@ class JsValidatorFactory
         list($class, $params) = $this->parseFormRequestName($class);
 
         $request = $this->app->__get('request');
-        $formRequest = $this->app->build($class, $params);
+        //$formRequest = $this->app->build($class, $params);
+
+        // Workaround: https://github.com/proengsoft/laravel-jsvalidation/issues/236
+        $formRequest = new $class;
 
         if ($session = $request->getSession()) {
             $formRequest->setLaravelSession($session);
